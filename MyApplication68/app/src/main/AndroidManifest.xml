@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StartActivity"></activity>
+        <activity android:name=".FinalActivity"></activity>
+        <activity android:name=".StartActivity" />
         <activity android:name=".WaitingActivity" />
         <activity android:name=".ConfirmActivity" />
         <activity android:name=".HomeActivity" />
