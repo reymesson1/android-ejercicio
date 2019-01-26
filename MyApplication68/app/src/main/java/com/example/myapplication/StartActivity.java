@@ -26,6 +26,8 @@ public class StartActivity extends AppCompatActivity implements SensorEventListe
     private Sensor mySensor;
     private SensorManager SM;
     private int count = 0;
+    private int countCorrect = 0;
+    private int countInCorrect = 0;
     private int index = 0;
     private boolean validate = false;
     private String names[] = {"Donald Trump","Nicolas Maduro","Chin Yu Jum","Capitalismo","Comunismo","Democracia","Socialismo","Voto","Urnas","Derecho","Elecciones","Candidato","Orador","Multitud","Campaña","Bandera","Poder","Publico","Debate","Conflicto","Gobierno","Bien social","Sabiduria","Nepotismo","Historia","Cultura","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
@@ -112,7 +114,10 @@ public class StartActivity extends AppCompatActivity implements SensorEventListe
         if(timeLeftText.equals("0:01")){
 
             Intent homeIntent = new Intent(StartActivity.this, FinalActivity.class);
-            homeIntent.putExtra("welcome",count); 
+            Bundle extras = new Bundle();
+            extras.putString("correct",Integer.toString(countCorrect));
+            extras.putString("incorrect",Integer.toString(countInCorrect));
+            homeIntent.putExtras(extras);
             startActivity(homeIntent);
             finish();
 
@@ -122,15 +127,17 @@ public class StartActivity extends AppCompatActivity implements SensorEventListe
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        xText.setText("X: " + event.values[0]);
-        yText.setText("Y: " + event.values[1]);
-        zText.setText("Z: " + event.values[2]);
+//        xText.setText("X: " + event.values[0]);
+//        yText.setText("Y: " + event.values[1]);
+//        zText.setText("Z: " + event.values[2]);
 
         if( (event.values[0]>2.8 && event.values[0]<=9) && (event.values[2]>-3 && event.values[2] <4)  ){
 
             linear.setBackgroundColor(Color.BLUE);
             //iText.setText(Integer.toString(count));
             iText.setText(names[index]);
+            //iText.setText(Integer.toString(index));
+
             validate = true;
 
         }else if(event.values[0]>=7 &&event.values[2]<-5){
@@ -139,6 +146,7 @@ public class StartActivity extends AppCompatActivity implements SensorEventListe
             if(validate) {
                 count++;
                 index++;
+                countCorrect++;
                 validate=false;
             }
 
@@ -147,6 +155,7 @@ public class StartActivity extends AppCompatActivity implements SensorEventListe
             if(validate) {
                 count--;
                 index++;
+                countInCorrect--;
                 validate=false;
             }
         }
